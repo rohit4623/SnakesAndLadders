@@ -1,0 +1,44 @@
+{
+  "boardSize": 10,
+  "snakes": [
+    {"head": 62, "tail": 5},
+    {"head": 33, "tail": 6},
+    {"head": 49, "tail": 9},
+    {"head": 88, "tail": 16},
+    {"head": 41, "tail": 20},
+    {"head": 56, "tail": 53},
+    {"head": 98, "tail": 64},
+    {"head": 93, "tail": 73},
+    {"head": 95, "tail": 75}
+  ],
+  "ladders": [
+    {"start": 2, "end": 37},
+    {"start": 27, "end": 46},
+    {"start": 10, "end": 32},
+    {"start": 51, "end": 68},
+    {"start": 61, "end": 79},
+    {"start": 65, "end": 84},
+    {"start": 71, "end": 91},
+    {"start": 81, "end": 100}
+  ],
+  "crocodiles": [
+    {"position": 15},
+    {"position": 45}
+  ],
+  "mines": [
+    {"position": 25},
+    {"position": 55}
+  ],
+  "players": [
+    {"name":"Gaurav", "startPos": 1},
+    {"name":"Sagar", "startPos": 1}
+  ],
+  "playerStartingPos": 50,
+  "diceCount": 2,
+  "movementStrategy": "SUM",
+  "generateRandomBoard": false,
+  "numSnakes": 9,
+  "numLadders": 8,
+  "numCrocodiles": 2,
+  "numMines": 2
+}

@@ -1,0 +1,14 @@
+{
+  "boardSize": 10,
+  "generateRandomBoard": true,
+  "numSnakes": 9,
+  "numLadders": 8,
+  "numCrocodiles": 2,
+  "numMines": 2,
+  "players": [
+    "Gaurav",
+    "Sagar"
+  ],
+  "diceCount": 1,
+  "movementStrategy": "SUM"
+}
