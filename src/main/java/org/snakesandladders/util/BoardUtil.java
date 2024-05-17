@@ -1,5 +1,6 @@
 package org.snakesandladders.util;
 
+import org.snakesandladders.config.GameConfig;
 import org.snakesandladders.model.Board;
 import org.snakesandladders.model.Ladder;
 import org.snakesandladders.model.Snake;
@@ -10,37 +11,6 @@ import org.snakesandladders.model.special.SpecialObject;
 import java.util.*;
 
 public class BoardUtil {
-
-    public static Board generateRandomBoardV1(int size, int numSnakes, int numLadders, int numCrocodiles, int numMines) {
-        Random random = new Random();
-        List<Snake> snakes = new ArrayList<>();
-        List<Ladder> ladders = new ArrayList<>();
-        List<SpecialObject> specialObjects = new ArrayList<>();
-
-        while (snakes.size() < numSnakes) {
-            int head = random.nextInt(size * size - 1) + 2;
-            int tail = random.nextInt(head - 1) + 1;
-            snakes.add(new Snake(head, tail));
-        }
-
-        while (ladders.size() < numLadders) {
-            int start = random.nextInt(size * size - 1) + 1;
-            int end = random.nextInt(size * size - start) + start + 1;
-            ladders.add(new Ladder(start, end));
-        }
-
-        while (specialObjects.size() < numCrocodiles) {
-            int position = random.nextInt(size * size - 1) + 1;
-            specialObjects.add(new Crocodile(position));
-        }
-
-        while (specialObjects.size() < numCrocodiles + numMines) {
-            int position = random.nextInt(size * size - 1) + 1;
-            specialObjects.add(new Mine(position));
-        }
-
-        return new Board(size, snakes, ladders, specialObjects);
-    }
 
     /*
         Rules to generate the board:
@@ -64,7 +34,7 @@ public class BoardUtil {
             int head = random.nextInt(size * size - 2) + 2;
             int tail = random.nextInt(head - 1) + 1;
 
-            // Ensure no overlap and snake should always be moving the player to strictly decreasing position
+            // Ensure no overlap and snake should always be moving the player strictly downwards
             if (head > tail && !occupiedPositions.contains(head) && !occupiedPositions.contains(tail)) {
                 snakes.add(new Snake(head, tail));
                 occupiedPositions.add(head);
@@ -76,7 +46,7 @@ public class BoardUtil {
             int start = random.nextInt(size * size - 1) + 1;
             int end = random.nextInt(size * size - start) + start + 1;
 
-            // Ensure no overlap and valid placement
+            // Ensure no overlap and ladder should always move a player strictly upwards
             if (start < end && !occupiedPositions.contains(start) && !occupiedPositions.contains(end)) {
                 ladders.add(new Ladder(start, end));
                 occupiedPositions.add(start);
@@ -85,9 +55,10 @@ public class BoardUtil {
         }
 
         while (specialObjects.size() < numCrocodiles) {
+            //allowed range is 2 to (size*size - 1) inclusive
             int position = random.nextInt(size * size - 2) + 2;
 
-            // Ensure no overlap
+            // Ensure no overlap for crocodiles with mines, snakes and ladders
             if (!occupiedPositions.contains(position)) {
                 specialObjects.add(new Crocodile(position));
                 occupiedPositions.add(position);
@@ -95,9 +66,10 @@ public class BoardUtil {
         }
 
         while (specialObjects.size() < numCrocodiles + numMines) {
+            //allowed range is 2 to (size*size - 1) inclusive
             int position = random.nextInt(size * size - 2) + 2;
 
-            // Ensure no overlap
+            // Ensure no overlap of mines with other objects
             if (!occupiedPositions.contains(position)) {
                 specialObjects.add(new Mine(position));
                 occupiedPositions.add(position);
@@ -105,6 +77,21 @@ public class BoardUtil {
         }
 
         return new Board(size, snakes, ladders, specialObjects);
+    }
+
+    /*
+        This function will combine all the types of special objects like crocodiles
+        and mines into a single list of type SpecialObject
+     */
+    public static List<SpecialObject> buildSpecialObjectsList(GameConfig config) {
+        List<SpecialObject> specialObjects = new ArrayList<>();
+        if(config.getCrocodiles().size() > 0) {
+            specialObjects.addAll(config.getCrocodiles());
+        }
+        if(config.getMines().size() > 0) {
+            specialObjects.addAll(config.getMines());
+        }
+        return specialObjects;
     }
 
 }

@@ -22,8 +22,9 @@
     {"start": 81, "end": 100}
   ],
   "crocodiles": [
-    {"position": 15},
-    {"position": 45}
+    {"position": 2},
+    {"position": 3},
+    {"position": 4}
   ],
   "mines": [
     {"position": 25},
@@ -31,11 +32,13 @@
   ],
   "players": [
     {"name":"Gaurav", "startPos": 1},
-    {"name":"Sagar", "startPos": 1}
+    {"name":"Sagar", "startPos": 1},
+    {"name":"Rohit", "startPos": 1}
   ],
   "playerStartingPos": 50,
-  "diceCount": 2,
-  "movementStrategy": "SUM",
+  "diceCount": 3,
+  "movementStrategy": "MIN",
+  "manualOverrideDiceRoll": true,
   "generateRandomBoard": false,
   "numSnakes": 9,
   "numLadders": 8,

@@ -9,7 +9,7 @@ public class Player {
 
     public Player(@JsonProperty("name") String name, @JsonProperty("startPos") int startPos) {
         this.name = name;
-        this.position = startPos;  // Starting position is 1
+        this.position = startPos;
         this.turnsToSkip = 0;
     }
 

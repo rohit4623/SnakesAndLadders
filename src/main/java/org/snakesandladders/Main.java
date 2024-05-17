@@ -8,12 +8,16 @@ import org.snakesandladders.model.special.SpecialObject;
 import org.snakesandladders.service.GameServiceImpl;
 import org.snakesandladders.util.BoardUtil;
 import org.snakesandladders.validator.GameValidator;
-import org.snakesandladders.validator.PlayerPositionValidator;
+import org.snakesandladders.validator.PlayerValidator;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.snakesandladders.util.BoardUtil.buildSpecialObjectsList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -32,8 +36,9 @@ public class Main {
 
         // Initialize players
         final List<Player> players = new ArrayList<>();
+        final Set<String> uniquePlayers = new HashSet<>();
         for (final Player player: config.getPlayers()) {
-            PlayerPositionValidator.validatePlayerPosition(board, player);
+            PlayerValidator.validate(board, player, uniquePlayers);
             players.add(player);
         }
 
@@ -42,16 +47,5 @@ public class Main {
         // Initialize and start game
         final GameServiceImpl game = new GameServiceImpl(board, players, config.getDiceCount(), config.getMovementStrategy());
         game.play();
-    }
-
-    private static List<SpecialObject> buildSpecialObjectsList(GameConfig config) {
-        List<SpecialObject> specialObjects = new ArrayList<>();
-        if(config.getCrocodiles().size() > 0) {
-            specialObjects.addAll(config.getCrocodiles());
-        }
-        if(config.getMines().size() > 0) {
-            specialObjects.addAll(config.getMines());
-        }
-        return specialObjects;
     }
 }

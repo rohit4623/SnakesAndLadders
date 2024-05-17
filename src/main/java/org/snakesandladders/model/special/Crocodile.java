@@ -11,8 +11,8 @@ public class Crocodile extends SpecialObject {
 
     @Override
     public void applyEffect(Player player) {
-        System.out.print(" and encountered a Crocodile at position " + getPosition() + " and moved back 5 steps.");
+        System.out.print(" and encountered a Crocodile at position " + getPosition() + " and moved back 5 steps to position " + Math.max(getPosition() - 5, 1));
         System.out.println();
-        player.setPosition(player.getPosition() - 5);
+        player.setPosition(Math.max(getPosition() - 5, 1));
     }
 }

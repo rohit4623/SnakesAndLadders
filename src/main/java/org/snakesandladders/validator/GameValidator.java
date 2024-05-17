@@ -15,6 +15,10 @@ public class GameValidator {
             throw new RuntimeException("Invalid board size : " + config.getBoardSize());
         }
 
+        if(config.getDiceCount() < 1) {
+            throw new RuntimeException("Invalid dice count : " + config.getDiceCount());
+        }
+
         if(config.getSnakes().size() < 1) {
             throw new RuntimeException("The game must have at least one snake");
         }

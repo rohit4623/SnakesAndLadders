@@ -4,9 +4,16 @@ import org.snakesandladders.model.Board;
 import org.snakesandladders.model.Player;
 
 import java.security.InvalidParameterException;
+import java.util.Set;
 
-public class PlayerPositionValidator {
-    public static void validatePlayerPosition(Board board, Player player) {
+public class PlayerValidator {
+
+    public static void validate(Board board, Player player, Set<String> uniquePlayers) {
+
+        if(!uniquePlayers.add(player.getName())) {
+            throw new InvalidParameterException("Player " + player.getName() + " already exists");
+        }
+
         if(player.getPosition() > board.getSize() || player.getPosition() < 1) {
             throw new InvalidParameterException("Player Starting Position must be in the range [1," + board.getSize() + "]");
         }

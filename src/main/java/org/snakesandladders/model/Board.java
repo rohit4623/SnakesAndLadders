@@ -41,6 +41,7 @@ public class Board {
         } else if (specialObjects.containsKey(position)) {
             System.out.print(currentPlayer.getName() + " rolled a " + roll);
             specialObjects.get(position).applyEffect(currentPlayer);
+            return currentPlayer.getPosition();
         } else {
             System.out.println(currentPlayer.getName() + " rolled a " + roll + " and moved to " + position);
         }
