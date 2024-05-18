@@ -25,7 +25,6 @@ public class GameConfig {
     private int numLadders;
     private int numCrocodiles;
     private int numMines;
-    private boolean manualOverrideDiceRoll;
 
     public GameConfig() {
     }
@@ -42,8 +41,7 @@ public class GameConfig {
                       @JsonProperty("numSnakes") int numSnakes,
                       @JsonProperty("numLadders") int numLadders,
                       @JsonProperty("numCrocodiles") int numCrocodiles,
-                      @JsonProperty("numMines") int numMines,
-                      @JsonProperty("manualOverrideDiceRoll") boolean manualOverrideDiceRoll) {
+                      @JsonProperty("numMines") int numMines) {
         this.boardSize = boardSize;
         this.snakes = snakes;
         this.ladders = ladders;
@@ -57,7 +55,6 @@ public class GameConfig {
         this.numLadders = numLadders;
         this.numCrocodiles = numCrocodiles;
         this.numMines = numMines;
-        this.manualOverrideDiceRoll = manualOverrideDiceRoll;
     }
 
     public int getBoardSize() {
@@ -112,7 +109,4 @@ public class GameConfig {
         return numMines;
     }
 
-    public boolean isManualOverrideDiceRoll() {
-        return manualOverrideDiceRoll;
-    }
 }
