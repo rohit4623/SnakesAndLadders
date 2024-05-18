@@ -2,8 +2,12 @@ package org.snakesandladders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.snakesandladders.config.GameConfig;
+import org.snakesandladders.data.MovementStrategy;
+import org.snakesandladders.factory.DiceRollerFactory;
 import org.snakesandladders.model.Board;
+import org.snakesandladders.model.Die;
 import org.snakesandladders.model.Player;
+import org.snakesandladders.model.diceroller.DiceRoller;
 import org.snakesandladders.model.special.SpecialObject;
 import org.snakesandladders.service.GameServiceImpl;
 import org.snakesandladders.util.BoardUtil;
@@ -44,8 +48,22 @@ public class Main {
 
         GameValidator.validateGame(config, players);
 
+        MovementStrategy movementStrategy = config.getMovementStrategy();
+        int diceCount = config.getDiceCount();
+
+        final DiceRoller diceRoller = initializeDiceRoller(movementStrategy, diceCount);
+
         // Initialize and start game
-        final GameServiceImpl game = new GameServiceImpl(board, players, config.getDiceCount(), config.getMovementStrategy());
+        final GameServiceImpl game = new GameServiceImpl(board, players, diceRoller);
         game.play();
+    }
+
+    private static DiceRoller initializeDiceRoller(MovementStrategy movementStrategy, int diceCount) {
+        List<Die> dies = new ArrayList<>();
+        for(int i = 0; i < diceCount; i++) {
+            dies.add(new Die(6));
+        }
+        final DiceRoller diceRoller = DiceRollerFactory.createDiceRoller(movementStrategy, dies);
+        return diceRoller;
     }
 }

@@ -15,6 +15,10 @@ public class GameValidator {
             throw new RuntimeException("Invalid board size : " + config.getBoardSize());
         }
 
+        if(config.getMovementStrategy() == null) {
+            throw new RuntimeException("Movement strategy can't be empty");
+        }
+
         if(config.getDiceCount() < 1) {
             throw new RuntimeException("Invalid dice count : " + config.getDiceCount());
         }

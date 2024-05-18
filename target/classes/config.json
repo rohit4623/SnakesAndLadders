@@ -35,9 +35,8 @@
     {"name":"Sagar", "startPos": 1},
     {"name":"Rohit", "startPos": 1}
   ],
-  "playerStartingPos": 50,
-  "diceCount": 3,
-  "movementStrategy": "MIN",
+  "diceCount": 2,
+  "movementStrategy": "SUM",
   "manualOverrideDiceRoll": true,
   "generateRandomBoard": false,
   "numSnakes": 9,

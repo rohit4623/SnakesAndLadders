@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.snakesandladders.config.GameConfig;
+import org.snakesandladders.data.MovementStrategy;
 import org.snakesandladders.model.Ladder;
 import org.snakesandladders.model.Player;
 import org.snakesandladders.model.Snake;
@@ -35,6 +36,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(0);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         GameValidator.validateGame(mockConfig, players);
     }
 
@@ -44,6 +46,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         when(mockConfig.getSnakes()).thenReturn(Collections.emptyList());
         GameValidator.validateGame(mockConfig, players);
     }
@@ -54,6 +57,7 @@ public class GameValidatorTest {
 
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(8, 5));
         when(mockConfig.getSnakes()).thenReturn(snakes);
         when(mockConfig.getLadders()).thenReturn(Collections.emptyList());
@@ -66,6 +70,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(1, 0));
         when(mockConfig.getSnakes()).thenReturn(snakes);
         GameValidator.validateGame(mockConfig, players);
@@ -77,6 +82,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(8, 10));
         when(mockConfig.getSnakes()).thenReturn(snakes);
         GameValidator.validateGame(mockConfig, players);
@@ -88,6 +94,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(8, 8));
         when(mockConfig.getSnakes()).thenReturn(snakes);
         GameValidator.validateGame(mockConfig, players);
@@ -99,6 +106,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(8, 5));
         when(mockConfig.getSnakes()).thenReturn(snakes);
         List<Ladder> ladders = Collections.singletonList(new Ladder(0, 1));
@@ -112,6 +120,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(8, 5));
         when(mockConfig.getSnakes()).thenReturn(snakes);
         List<Ladder> ladders = Collections.singletonList(new Ladder(5, 4));
@@ -125,6 +134,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(8, 5));
         when(mockConfig.getSnakes()).thenReturn(snakes);
         List<Ladder> ladders = Collections.singletonList(new Ladder(5, 5));
@@ -138,10 +148,19 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(5, 4));
         List<Ladder> ladders = Collections.singletonList(new Ladder(5, 9));
         when(mockConfig.getLadders()).thenReturn(ladders);
         when(mockConfig.getSnakes()).thenReturn(snakes);
+        GameValidator.validateGame(mockConfig, players);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testValidateGame_EmptyMovementStrategy() {
+        List<Player> players = Arrays.asList(new Player("Player1", 1), new Player("Player2", 1));
+
+        when(mockConfig.getBoardSize()).thenReturn(10);
         GameValidator.validateGame(mockConfig, players);
     }
 
@@ -151,6 +170,7 @@ public class GameValidatorTest {
         
         when(mockConfig.getBoardSize()).thenReturn(10);
         when(mockConfig.getDiceCount()).thenReturn(1);
+        when(mockConfig.getMovementStrategy()).thenReturn(MovementStrategy.SUM);
         List<Snake> snakes = Collections.singletonList(new Snake(5, 4));
         List<Ladder> ladders = Collections.singletonList(new Ladder(7, 9));
         when(mockConfig.getLadders()).thenReturn(ladders);

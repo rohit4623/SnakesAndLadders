@@ -25,7 +25,6 @@ public class GameConfig {
     private int numLadders;
     private int numCrocodiles;
     private int numMines;
-    private int playerStartingPos;
     private boolean manualOverrideDiceRoll;
 
     // For Jackson Error - TBD
@@ -46,7 +45,6 @@ public class GameConfig {
                       @JsonProperty("numLadders") int numLadders,
                       @JsonProperty("numCrocodiles") int numCrocodiles,
                       @JsonProperty("numMines") int numMines,
-                      @JsonProperty("playerStartingPos") int playerStartingPos,
                       @JsonProperty("manualOverrideDiceRoll") boolean manualOverrideDiceRoll) {
         this.boardSize = boardSize;
         this.snakes = snakes;
@@ -61,7 +59,6 @@ public class GameConfig {
         this.numLadders = numLadders;
         this.numCrocodiles = numCrocodiles;
         this.numMines = numMines;
-        this.playerStartingPos = playerStartingPos;
         this.manualOverrideDiceRoll = manualOverrideDiceRoll;
     }
 
@@ -115,10 +112,6 @@ public class GameConfig {
 
     public int getNumMines() {
         return numMines;
-    }
-
-    public int getPlayerStartingPos() {
-        return playerStartingPos;
     }
 
     public boolean isManualOverrideDiceRoll() {

@@ -1,41 +1,46 @@
 package org.snakesandladders.service;
 
 import org.snakesandladders.data.MovementStrategy;
-import org.snakesandladders.factory.DiceRollerFactory;
 import org.snakesandladders.model.Board;
-import org.snakesandladders.model.diceroller.DiceRoller;
-import org.snakesandladders.model.Die;
 import org.snakesandladders.model.Player;
+import org.snakesandladders.model.diceroller.DiceRoller;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameServiceImpl implements GameService {
     private Board board;
     private List<Player> players;
-    private List<Die> dies;
-    private int diceCount;
-    private MovementStrategy movementStrategy;
-    private Random random;
+    private DiceRoller diceRoller;
 
     private Map<Integer, Player> lastPlayerPositionMap;
 
-    public GameServiceImpl(Board board, List<Player> players, int diceCount, MovementStrategy movementStrategy) {
+    public GameServiceImpl(Board board, List<Player> players, DiceRoller diceRoller) {
         this.board = board;
         this.players = players;
-        this.diceCount = diceCount;
-        this.movementStrategy = movementStrategy;
-        this.random = new Random();
         this.lastPlayerPositionMap = new HashMap<>();
-        this.dies = new ArrayList<>();
-        for(int i=0; i < diceCount; i++) {
-            dies.add(new Die(6));
-        }
+        this.diceRoller = diceRoller;
     }
 
     @Override
     public void play() {
+        play(Collections.emptyMap(), Collections.emptyMap(), null);
+    }
+
+    public void play(Map<String, Integer> startingPositions, Map<String, List<List<Integer>>> diceRolls, MovementStrategy movementStrategy) {
         boolean gameWon = false;
 
+        // Initialize player positions based on startingPositions map for manual override
+        // otherwise it will take from the json file
+        for (Player player : players) {
+            if (startingPositions.containsKey(player.getName())) {
+                player.setPosition(startingPositions.get(player.getName()));
+            }
+        }
+
+        int turn = 0;
         while (!gameWon) {
             for (Player currentPlayer : players) {
                 //check if the player has to skip the turn due to hitting mines
@@ -45,7 +50,13 @@ public class GameServiceImpl implements GameService {
                     continue;
                 }
 
-                int roll = rollDice(dies);
+                int roll = diceRoller.rollDice();
+                //give manual override input for D dies
+                if (diceRolls.containsKey(currentPlayer.getName()) && turn < diceRolls.get(currentPlayer.getName()).size()) {
+                    List<Integer> rolls = diceRolls.get(currentPlayer.getName()).get(turn);
+                    roll = getRollValueForManualOverride(rolls, movementStrategy);
+                }
+
                 int newPosition = currentPlayer.getPosition() + roll;
 
                 // Ensure the new position does not exceed the board size
@@ -72,6 +83,7 @@ public class GameServiceImpl implements GameService {
                     gameWon = true;
                     break;
                 }
+                turn++;
             }
         }
     }
@@ -88,8 +100,30 @@ public class GameServiceImpl implements GameService {
         }
     }
 
-    private int rollDice(List<Die> dies) {
-        final DiceRoller diceRoller = DiceRollerFactory.createDiceRoller(movementStrategy, dies);
-        return diceRoller.rollDice();
+
+    private int getRollValueForManualOverride(List<Integer> rolls, MovementStrategy movementStrategy) {
+        switch (movementStrategy) {
+            case SUM:
+                int sum = 0;
+                for(int roll: rolls) {
+                    sum += roll;
+                }
+                return sum;
+            case MIN:
+                int min = Integer.MAX_VALUE;
+                for(int roll: rolls) {
+                    min = Math.min(min, roll);
+                }
+                return min;
+            case MAX:
+                int max = Integer.MIN_VALUE;
+                for(int roll: rolls) {
+                    max = Math.min(max, roll);
+                }
+                return max;
+            default:
+                throw new RuntimeException("Movement Strategy not found");
+
+        }
     }
 }
