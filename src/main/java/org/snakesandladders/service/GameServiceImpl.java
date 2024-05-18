@@ -51,7 +51,7 @@ public class GameServiceImpl implements GameService {
                 }
 
                 int roll = diceRoller.rollDice();
-                //give manual override input for D dies
+                //give manual override inputs for D dies
                 if (diceRolls.containsKey(currentPlayer.getName()) && turn < diceRolls.get(currentPlayer.getName()).size()) {
                     List<Integer> rolls = diceRolls.get(currentPlayer.getName()).get(turn);
                     roll = getRollValueForManualOverride(rolls, movementStrategy);
@@ -89,6 +89,10 @@ public class GameServiceImpl implements GameService {
     }
 
 
+    /**
+     * We maintain a last position map with key as position for each player and whenever we find a player at our new position,
+     * we send it back to the position 1
+     */
     private void killLastPlayerIfExistOnNewPosition(Player currentPlayer, int newPosition) {
         if(lastPlayerPositionMap.containsKey(newPosition)) {
             final Player lastPlayerOnCurrentPos = lastPlayerPositionMap.get(newPosition);

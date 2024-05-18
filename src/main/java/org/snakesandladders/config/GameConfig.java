@@ -27,11 +27,9 @@ public class GameConfig {
     private int numMines;
     private boolean manualOverrideDiceRoll;
 
-    // For Jackson Error - TBD
     public GameConfig() {
     }
 
-    // Constructor with parameters (optional)
     public GameConfig(@JsonProperty("boardSize") int boardSize,
                       @JsonProperty("snakes") List<Snake> snakes,
                       @JsonProperty("ladders") List<Ladder> ladders,

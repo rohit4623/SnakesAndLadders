@@ -2,6 +2,9 @@ package org.snakesandladders.model;
 
 import java.util.Random;
 
+/**
+ * A simple die object configurable to have n sides
+ */
 public class Die {
     private Random random;
     private int sides;

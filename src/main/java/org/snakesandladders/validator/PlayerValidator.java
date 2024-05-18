@@ -8,6 +8,10 @@ import java.util.Set;
 
 public class PlayerValidator {
 
+    /**
+     * Assumptions: We will have unique player names and at least 2 players are required to play
+     * A Player must be placed within the board limits and it doesn't make sense to spawn a player at the last position of the game.
+     */
     public static void validate(Board board, Player player, Set<String> uniquePlayers) {
 
         if(!uniquePlayers.add(player.getName())) {

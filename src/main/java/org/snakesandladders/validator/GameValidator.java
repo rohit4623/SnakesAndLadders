@@ -43,8 +43,15 @@ public class GameValidator {
         }
     }
 
+    /**
+     * Assumptions: A snake should be defined within the board limits.
+     * It does not make sense to put a snake's head at the last or first position of the game
+     * It only makes sense to have a snake's tail to end at first position in the game
+     * a snake should move a player strictly downwards, so it's length cannot be zero
+     */
     private static void validateSnakePositions(List<Snake> snakes, int size) {
         for(Snake snake: snakes) {
+
             if(snake.getHead() <= 1 || snake.getHead() >= size) {
                 throw new RuntimeException("Snake's head position " + snake.getHead() +  " out of range: [" + "2," + (size-1) + "]");
             }
@@ -63,6 +70,9 @@ public class GameValidator {
         }
     }
 
+    /**
+     * similar assumptions for ladders as above
+     */
     private static void validateLadderPositions(List<Ladder> ladders, int size) {
         for(Ladder ladder: ladders) {
             if(ladder.getStart() <= 1 || ladder.getStart() >= size) {
@@ -83,6 +93,11 @@ public class GameValidator {
         }
     }
 
+    /**
+     * If snake's head coincides with ladder end, and snake's tail coincides with ladder start
+     * The piece will remain in an infinite loop forever.
+     * Secondly, if snake's head and ladder's start coincide, we will not be able make a decision
+     */
     private static void validateSnakeLadderOverlap(List<Snake> snakes, List<Ladder> ladders) {
         for(final Snake snake: snakes) {
             for(final Ladder ladder: ladders) {
