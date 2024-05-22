@@ -1,4 +1,5 @@
 **Snakes & Ladders**
+This code attempts to solve the below problem statement using the solid principles and design pattern to build a scalable project.
 
 **Problem Statement**
 
