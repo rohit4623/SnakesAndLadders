@@ -1,4 +1,5 @@
 **Snakes & Ladders**
+
 This code attempts to solve the below problem statement using the solid principles and design pattern to build a scalable project.
 
 **Problem Statement**
@@ -10,12 +11,19 @@ functionality:
 Mandatory Requirements:**
 
 You have to take a configuration (can be a yml/json file) with the following parameters.
+
  Number of players: N
+ 
  Board Size: BS (BS x BS)
+ 
  Number of Snakes: S
+ 
  Number of Ladders: L
+ 
  Number of Dies: D
+ 
  Movement Strategy: MS
+
 
 Note: Movement strategy is either SUM (sum of numbers on dies), MAX (max of numbers on
 dies), MIN (min of number on dies).
