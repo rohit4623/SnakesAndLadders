@@ -62,6 +62,5 @@ public class PlayerValidatorTest {
         Set<String> uniquePlayers = new HashSet<>();
         uniquePlayers.add("Player4");
         PlayerValidator.validate(mockBoard, player, uniquePlayers);
-        // No exception should be thrown
     }
 }
